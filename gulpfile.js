@@ -1,6 +1,11 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass')(require('sass'));
+const sassModule = require('gulp-sass');
+const sassCompiler = require('sass');
 const imagemin = require('gulp-imagemin');
+
+const sass = sassModule(sassCompiler);
+
+
 
 // Task to compile SCSS to CSS
 gulp.task('styles', function() {
@@ -12,10 +17,16 @@ gulp.task('styles', function() {
 // Task to optimize images
 gulp.task('images', function() {
     return gulp.src('src/images/*') // Source folder for images
-        .pipe(imagemin()) // Optimize images
-        .pipe(gulp.dest('dist/images')); // Destination folder for optimized images
+    .pipe(imagemin()) // Optimize images using gulp-imagemin
+        .pipe(gulp.dest('dist/images/*')); // Destination folder for optimized images
 });
 
-exports.default = gulp.parallel('styles', 'images'); // Default task to run both tasks in series
-exports.watch = function() {
-    gulp.watch('src/styles/**/*.scss', gulp.parallel('styles'));}; // Watch SCSS files for changes
+const defaultTask = gulp.parallel('styles', 'images'); // Default task to run both tasks in series
+
+const watchTask = function() {
+    gulp.watch('src/styles/**/*.scss', gulp.parallel('styles'));
+    gulp.watch('src/images/**/*', gulp.parallel('images')); // Watch images and subfolders for changes
+}; // Watch SCSS files and images for changes
+
+exports.default = defaultTask;
+exports.watch = watchTask;
