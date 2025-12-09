@@ -2,6 +2,10 @@ const gulp = require('gulp');
 const sassModule = require('gulp-sass');
 const sassCompiler = require('sass');
 const imagemin = require('gulp-imagemin');
+const mozjpeg = require('imagemin-mozjpeg');
+const pngquant = require('imagemin-pngquant');
+const gifsicle = require('imagemin-gifsicle');
+
 
 const sass = sassModule(sassCompiler);
 
@@ -15,12 +19,40 @@ gulp.task('styles', function() {
 });
 
 // Task to optimize images
-gulp.task('images', function() {
-    return gulp.src('src/images/*') // Source folder for images
-    .pipe(imagemin()) // Optimize images using gulp-imagemin
-        .pipe(gulp.dest('dist/images/*')); // Destination folder for optimized images
+gulp.task('images', () => {
+  console.log('🚀 Iniciando compressão de imagens...\n');
+  
+  return gulp
+    .src('src/images/**/*.{jpg,jpeg,png,svg,gif,ico}')
+    .pipe(
+      imagemin([
+        gifsicle({
+          interlaced: true,
+          optimizationLevel: 3,
+        }),
+        mozjpeg({
+          quality: 75,
+          progressive: true,
+        }),
+        pngquant({
+          quality: [0.6, 0.8],
+          speed: 4,
+        }),
+        imagemin.svgo({
+          plugins: [
+            { removeViewBox: false },
+            { cleanupIDs: true }
+          ]
+        })
+      ], {
+        verbose: true,
+      })
+    )
+    .pipe(gulp.dest('dist/images'))
+    .on('end', () => {
+      console.log('\n✅ Compressão concluída com sucesso!');
+    });
 });
-
 const defaultTask = gulp.parallel('styles', 'images'); // Default task to run both tasks in series
 
 const watchTask = function() {
