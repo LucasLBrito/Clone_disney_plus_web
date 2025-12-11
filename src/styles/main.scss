@@ -1,5 +1,6 @@
 @use 'variaveis';
 @use 'hero';
+@use 'shows';
 
 @font-face{
     font-family: Aveneir;
@@ -15,13 +16,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Aveneir', sans-serif;
 }
 
 
 
 body {
     background-color: variaveis.$cordefundo;
-    font-family: 'Aveneir', sans-serif;
+   
 }
 @mixin text($fontsize:16px){
     font-size: $fontsize;
