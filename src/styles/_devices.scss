@@ -12,6 +12,9 @@
 
         &__item{
             text-align: center;
+            li{
+                list-style-type: none;
+            }
 
             h4{
                 margin-top: 20px;
