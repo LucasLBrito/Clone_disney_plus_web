@@ -5,6 +5,7 @@
 @use 'devices';
 @use 'faq';
 @use 'footer';
+@use 'header';
 
 @font-face{
     font-family: Aveneir;
@@ -21,6 +22,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Aveneir', sans-serif;
+    list-style: none;
 }
 
 
@@ -65,18 +67,47 @@ body {
 }
 
 .button{
-     
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
             border: none;
              display: block;
              width: 100%;   
              height: 60px;
              font-size: 18px;
              color: variaveis.$corTextoSecundario;
-             background-color: #6421ff;
+             background-color: variaveis.$cordefundoBtnPrimario;
              text-transform: uppercase;
              border-radius: 4px;
-             margin-top: 2vw;
-             margin-bottom: 8px;
+             text-decoration: none;
+             padding: 8px 14px;
+             border: 1px solid variaveis.$cordefundoBtnPrimario;
+             //word-spacing: 20px;
+              &:hover{
+                    background-color: lighten(variaveis.$cordefundoBtnPrimario,3%);
+                }
+
+             &--secondary{
+                background-color: variaveis.$cordefundoBtnsecundario;
+                border-color: variaveis.$cordefundoBtnsecundario;
+                padding: 14px 10px;
+
+                &:hover{
+                    background-color: lighten(variaveis.$cordefundoBtnsecundario,3%);
+                }
+             }
+             &--dark{
+                background-color: rgb(variaveis.$cordefundoBtnDark,0.8);
+                border-color: variaveis.$corTextoSecundario;
+                padding: 14px 10px;
+
+                &:hover{
+                    background-color: variaveis.$corTextoSecundario;
+                    color: variaveis.$cordefundo;
+                }
+            
+             }
         
 }
 .image-text-section{
