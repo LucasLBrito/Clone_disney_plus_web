@@ -5,9 +5,16 @@ const imagemin = require('gulp-imagemin');
 const mozjpeg = require('imagemin-mozjpeg');
 const pngquant = require('imagemin-pngquant');
 const gifsicle = require('imagemin-gifsicle');
+const uglify = require('gulp-uglify');
 
 
 const sass = sassModule(sassCompiler);
+// Task to minify JavaScript files
+gulp.task('scriptsmin',function () {
+    return gulp.src('src/scripts/*.js') // Source folder for JS files`
+        .pipe(uglify()) // Minify JS files
+        .pipe(gulp.dest('dist/js')); // Destination folder for minified JS files
+});
 
 
 
@@ -53,7 +60,7 @@ gulp.task('images', () => {
       console.log('\n✅ Compressão concluída com sucesso!');
     });
 });
-const defaultTask = gulp.parallel('styles', 'images'); // Default task to run both tasks in series
+const defaultTask = gulp.parallel('styles', 'images', 'scriptsmin'); // Default task to run both tasks in series
 
 const watchTask = function() {
     gulp.watch('src/styles/**/*.scss', gulp.parallel('styles'));

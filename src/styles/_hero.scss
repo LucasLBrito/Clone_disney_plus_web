@@ -7,6 +7,10 @@
     text-align: center;
     background-size: cover;
 
+    @media (max-width:768px) {
+        background-image: url(../images/hero_mobile.jpeg);
+    }
+
     .button{
         margin-top: 2vw;
         margin-bottom: 8px;
@@ -34,6 +38,10 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+
+            @media (max-width:768px) {
+                display: block;
+            }
 
             &__combo{
                 width: calc(50% - 12px);
